@@ -1,13 +1,29 @@
 export const colors = {
-  background: "#080B1A",
-  card: "#111827",
-  cardBorder: "#312E81",
-  primary: "#7C3AED",
-  secondary: "#38BDF8",
-  danger: "#DC2626",
+  primary: "#E85D04",
+  primaryDark: "#9D0208",
+
+  secondary: "#4361EE",
+  secondaryDark: "#1D3557",
+
+  background: "#F8FAFC",
+  backgroundDark: "#0F172A",
+
+  card: "#FFFFFF",
+  cardDark: "#1E293B",
+
+  text: "#0F172A",
+  textLight: "#64748B",
+  textDark: "#F8FAFC",
+
+  border: "#E2E8F0",
+
   success: "#22C55E",
-  warning: "#F59E0B",
-  text: "#FFFFFF",
-  mutedText: "#CBD5E1",
-  darkText: "#0F172A",
+  warning: "#FACC15",
+  danger: "#EF4444",
+  info: "#38BDF8",
+
+  oxygen: "#38BDF8",
+  water: "#2563EB",
+  energy: "#F59E0B",
+  temperature: "#EF4444",
 };
