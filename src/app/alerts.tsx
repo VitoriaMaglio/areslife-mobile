@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 28,
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   subtitle: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 8,
     marginBottom: 20,
     lineHeight: 21,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 14,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
+    borderColor: colors.border,
   },
   icon: {
     fontSize: 34,
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   description: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 6,
     lineHeight: 20,
   },
