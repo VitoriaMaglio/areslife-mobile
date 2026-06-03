@@ -30,7 +30,7 @@ export function TouristCard({ tourist }: TouristCardProps) {
     >
       <View style={styles.header}>
         <View style={styles.avatar}>
-          <MaterialCommunityIcons name={"account-astronaut" as any} size={30} color="#FFFFFF" />
+          <MaterialCommunityIcons name={"rocket" as any} size={30} color="#FFFFFF" />
         </View>
 
         <View style={styles.info}>
