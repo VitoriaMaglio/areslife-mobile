@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
   },
   content: {
     padding: 20,
+    paddingBottom: 40,
   },
   title: {
     fontSize: 28,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   subtitle: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 8,
     marginBottom: 22,
     lineHeight: 21,
@@ -102,14 +103,14 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 16,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
+    borderColor: colors.border,
   },
   icon: {
     fontSize: 28,
     marginBottom: 10,
   },
   cardLabel: {
-    color: colors.mutedText,
+    color: colors.textLight,
     fontSize: 14,
   },
   cardValue: {
@@ -137,13 +138,13 @@ const styles = StyleSheet.create({
     borderColor: colors.secondary,
   },
   alertTitle: {
-    color: colors.text,
+    color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 8,
   },
   alertText: {
-    color: colors.mutedText,
+    color: "#CBD5E1",
     lineHeight: 21,
   },
   button: {
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   buttonText: {
-    color: colors.text,
+    color: "#FFFFFF",
     textAlign: "center",
     fontWeight: "bold",
   },
