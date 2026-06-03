@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   subtitle: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 8,
     marginBottom: 20,
     lineHeight: 21,
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     padding: 16,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
+    borderColor: colors.border,
     marginBottom: 20,
   },
   cardTitle: {
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   cardText: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 4,
   },
   button: {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   buttonText: {
-    color: colors.text,
+    color: "#FFFFFF",
     fontWeight: "bold",
     textAlign: "center",
   },
