@@ -72,14 +72,14 @@ const styles = StyleSheet.create({
     color: colors.text,
   },
   subtitle: {
-    color: colors.mutedText,
+    color: colors.textLight,
     marginTop: 8,
     marginBottom: 20,
   },
   input: {
     backgroundColor: colors.card,
     borderWidth: 1,
-    borderColor: colors.cardBorder,
+    borderColor: colors.border,
     color: colors.text,
     padding: 14,
     borderRadius: 14,
