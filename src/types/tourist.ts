@@ -1,8 +1,13 @@
+export type TouristStatus = "Seguro" | "Atenção" | "Crítico";
+
 export type Tourist = {
-  id: number;
-  nome: string;
-  idade: number;
-  pais: string;
-  destino: string;
-  status: string;
+  id: string;
+  name: string;
+  age: number;
+  origin: string;
+  destination: string;
+  status: TouristStatus;
+  oxygenLevel: number;
+  heartRate: number;
+  missionDays: number;
 };
