@@ -1,29 +1,34 @@
 export const colors = {
-  primary: "#E85D04",
-  primaryDark: "#9D0208",
+  // Espaço profundo
+  background: "#060815",
+  backgroundAlt: "#0A0E22",
 
-  secondary: "#4361EE",
-  secondaryDark: "#1D3557",
+  // Painéis / cards (vidro escuro)
+  card: "#0E1330",
+  surface: "#141A3A",
+  border: "#283163",
 
-  background: "#F8FAFC",
-  backgroundDark: "#0F172A",
+  // Neon
+  primary: "#6C5CFF",   // violeta elétrico
+  secondary: "#22D3EE", // ciano
+  accent: "#E879F9",    // magenta
 
-  card: "#FFFFFF",
-  cardDark: "#1E293B",
+  // Texto
+  text: "#EAF0FF",
+  textLight: "#8A93C2",
 
-  text: "#0F172A",
-  textLight: "#64748B",
-  textDark: "#F8FAFC",
+  // Status
+  success: "#34D399",
+  warning: "#FBBF24",
+  danger: "#FB7185",
 
-  border: "#E2E8F0",
+  // Brilho
+  glow: "#6C5CFF",
+} as const;
 
-  success: "#22C55E",
-  warning: "#FACC15",
-  danger: "#EF4444",
-  info: "#38BDF8",
-
-  oxygen: "#38BDF8",
-  water: "#2563EB",
-  energy: "#F59E0B",
-  temperature: "#EF4444",
+// Degradês reutilizáveis
+export const gradients = {
+  space: ["#0A0E22", "#060815", "#02030A"] as const,
+  hero: ["#1B1F4D", "#0E1330"] as const,
+  button: ["#6C5CFF", "#22D3EE"] as const,
 };
