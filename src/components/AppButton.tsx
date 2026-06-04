@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { LinearGradient } from "expo-linear-gradient";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../constants/colors";
 
@@ -13,10 +12,10 @@ type AppButtonProps = {
   onPress: () => void;
 };
 
-const gradientByVariant = {
-  blue: ["rgba(14,165,233,0.35)", "rgba(14,165,233,0.08)"],
-  purple: ["rgba(168,85,247,0.35)", "rgba(168,85,247,0.08)"],
-  orange: ["rgba(249,115,22,0.35)", "rgba(249,115,22,0.08)"],
+const backgroundByVariant = {
+  blue: "rgba(34, 211, 238, 0.10)",
+  purple: "rgba(108, 92, 255, 0.14)",
+  orange: "rgba(249, 115, 22, 0.12)",
 };
 
 const borderByVariant = {
@@ -26,7 +25,7 @@ const borderByVariant = {
 };
 
 const iconByVariant = {
-  blue: colors.primary,
+  blue: colors.blue,
   purple: colors.purple,
   orange: colors.orange,
 };
@@ -40,11 +39,11 @@ export default function AppButton({
 }: AppButtonProps) {
   return (
     <Pressable onPress={onPress} style={styles.pressable}>
-      <LinearGradient
-        colors={gradientByVariant[variant] as [string, string]}
+      <View
         style={[
           styles.container,
           {
+            backgroundColor: backgroundByVariant[variant],
             borderColor: borderByVariant[variant],
             shadowColor: borderByVariant[variant],
           },
@@ -55,7 +54,7 @@ export default function AppButton({
             styles.iconBox,
             {
               borderColor: borderByVariant[variant],
-              backgroundColor: `${iconByVariant[variant]}20`,
+              backgroundColor: `${iconByVariant[variant]}22`,
             },
           ]}
         >
@@ -64,12 +63,11 @@ export default function AppButton({
 
         <View style={styles.textBox}>
           <Text style={styles.title}>{title}</Text>
-
           {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
         </View>
 
         <Ionicons name="chevron-forward" size={22} color={colors.textSecondary} />
-      </LinearGradient>
+      </View>
     </Pressable>
   );
 }

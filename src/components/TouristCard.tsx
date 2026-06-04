@@ -1,68 +1,58 @@
-import { StyleSheet, Text, View } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { colors } from "../constants/colors";
 import { Tourist } from "../types/tourist";
-import { colors, gradients } from "../constants/colors";
 
 type TouristCardProps = {
   tourist: Tourist;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
-export function TouristCard({ tourist }: TouristCardProps) {
-  const statusColor =
-    tourist.status === "Seguro"
-      ? colors.success
-      : tourist.status === "Atenção"
-      ? colors.warning
-      : colors.danger;
-
+export default function TouristCard({
+  tourist,
+  onEdit,
+  onDelete,
+}: TouristCardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.header}>
-        <LinearGradient colors={gradients.button} style={styles.avatar}>
-          <MaterialCommunityIcons
-            name={"account-astronaut" as any}
-            size={28}
-            color="#06091A"
-          />
-        </LinearGradient>
+        <View style={styles.avatar}>
+          <Ionicons name="person" size={24} color={colors.secondary} />
+        </View>
 
         <View style={styles.info}>
           <Text style={styles.name}>{tourist.name}</Text>
-          <Text style={styles.subtitle}>
-            {tourist.origin} → {tourist.destination}
-          </Text>
+          <Text style={styles.mission}>{tourist.missionType}</Text>
         </View>
 
-        <View
-          style={[
-            styles.badge,
-            { backgroundColor: `${statusColor}22`, borderColor: `${statusColor}66` },
-          ]}
-        >
-          <Text style={[styles.badgeText, { color: statusColor }]}>
-            {tourist.status}
-          </Text>
+        <View style={styles.statusBadge}>
+          <Text style={styles.statusText}>{tourist.healthStatus}</Text>
         </View>
       </View>
 
-      <View style={styles.stats}>
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Oxigênio</Text>
-          <Text style={[styles.statValue, { color: colors.secondary }]}>
-            {tourist.oxygenLevel}%
-          </Text>
-        </View>
+      <View style={styles.details}>
+        <Text style={styles.detailText}>Idade: {tourist.age}</Text>
+        <Text style={styles.detailText}>
+          Nacionalidade: {tourist.nationality}
+        </Text>
+        <Text style={styles.detailText}>Bilhete: {tourist.ticketStatus}</Text>
+      </View>
 
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Batimentos</Text>
-          <Text style={styles.statValue}>{tourist.heartRate} bpm</Text>
-        </View>
+      <View style={styles.actions}>
+        {onEdit && (
+          <Pressable style={styles.editButton} onPress={onEdit}>
+            <Ionicons name="create-outline" size={16} color={colors.text} />
+            <Text style={styles.buttonText}>Editar</Text>
+          </Pressable>
+        )}
 
-        <View style={styles.statItem}>
-          <Text style={styles.statLabel}>Missão</Text>
-          <Text style={styles.statValue}>{tourist.missionDays} dias</Text>
-        </View>
+        {onDelete && (
+          <Pressable style={styles.deleteButton} onPress={onDelete}>
+            <Ionicons name="trash-outline" size={16} color={colors.text} />
+            <Text style={styles.buttonText}>Excluir</Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );
@@ -71,68 +61,93 @@ export function TouristCard({ tourist }: TouristCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.card,
-    borderColor: colors.border,
+    borderRadius: 22,
     borderWidth: 1,
+    borderColor: colors.borderPurple,
     padding: 16,
-    borderRadius: 20,
     marginBottom: 14,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.25,
+    shadowRadius: 14,
+    elevation: 5,
   },
   header: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 18,
+    gap: 12,
   },
   avatar: {
-    width: 48,
-    height: 48,
-    borderRadius: 16,
+    width: 52,
+    height: 52,
+    borderRadius: 18,
+    backgroundColor: "rgba(34, 211, 238, 0.10)",
+    borderWidth: 1,
+    borderColor: colors.borderBlue,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 12,
   },
   info: {
     flex: 1,
   },
   name: {
     color: colors.text,
-    fontSize: 16,
-    fontWeight: "800",
+    fontSize: 17,
+    fontWeight: "900",
   },
-  subtitle: {
-    color: colors.textLight,
-    fontSize: 13,
-    marginTop: 2,
+  mission: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    marginTop: 3,
   },
-  badge: {
-    paddingVertical: 6,
+  statusBadge: {
+    backgroundColor: "rgba(52, 211, 153, 0.12)",
+    borderWidth: 1,
+    borderColor: colors.success,
     paddingHorizontal: 10,
+    paddingVertical: 5,
     borderRadius: 999,
-    borderWidth: 1,
   },
-  badgeText: {
-    fontSize: 12,
+  statusText: {
+    color: colors.success,
+    fontSize: 11,
     fontWeight: "800",
   },
-  stats: {
+  details: {
+    marginTop: 14,
+    gap: 4,
+  },
+  detailText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+  },
+  actions: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: colors.backgroundAlt,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 16,
-    padding: 12,
+    gap: 10,
+    marginTop: 16,
   },
-  statItem: {
+  editButton: {
     flex: 1,
+    backgroundColor: colors.primary,
+    paddingVertical: 11,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 6,
   },
-  statLabel: {
-    color: colors.textLight,
-    fontSize: 12,
-    marginBottom: 4,
+  deleteButton: {
+    flex: 1,
+    backgroundColor: colors.danger,
+    paddingVertical: 11,
+    borderRadius: 14,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 6,
   },
-  statValue: {
+  buttonText: {
     color: colors.text,
-    fontSize: 14,
     fontWeight: "800",
+    fontSize: 13,
   },
 });
