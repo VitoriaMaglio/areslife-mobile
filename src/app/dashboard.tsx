@@ -1,18 +1,29 @@
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
 import {
-  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { router } from "expo-router";
 
+import AppButton from "../components/AppButton";
 import BottomNav from "../components/BottomNav";
+import SpaceBackground from "../components/SpaceBackground";
 import { colors } from "../constants/colors";
 
-const resources = [
+type Resource = {
+  id: number;
+  label: string;
+  value: string;
+  status: string;
+  icon: keyof typeof Ionicons.glyphMap;
+  color: string;
+  border: string;
+};
+
+const resources: Resource[] = [
   {
     id: 1,
     label: "Oxigênio",
@@ -20,7 +31,6 @@ const resources = [
     status: "Nível estável",
     icon: "cloud-outline",
     color: colors.secondary,
-    background: "rgba(34, 211, 238, 0.12)",
     border: colors.borderBlue,
   },
   {
@@ -29,8 +39,7 @@ const resources = [
     value: "78%",
     status: "Nível adequado",
     icon: "water-outline",
-    color: colors.secondary,
-    background: "rgba(34, 211, 238, 0.10)",
+    color: colors.blue,
     border: colors.borderBlue,
   },
   {
@@ -40,20 +49,18 @@ const resources = [
     status: "Consumo normal",
     icon: "flash-outline",
     color: colors.orange,
-    background: "rgba(249, 115, 22, 0.12)",
     border: colors.borderOrange,
   },
   {
     id: 4,
     label: "Temperatura",
     value: "21°C",
-    status: "Estável",
+    status: "Ambiente seguro",
     icon: "thermometer-outline",
     color: colors.success,
-    background: "rgba(52, 211, 153, 0.10)",
     border: colors.success,
   },
-] as const;
+];
 
 const stats = [
   {
@@ -86,48 +93,59 @@ export default function DashboardScreen() {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.screen}>
+        <SpaceBackground />
+
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.content}
           showsVerticalScrollIndicator={false}
         >
-          <View style={styles.marsGlow} />
-          <View style={styles.starOne} />
-          <View style={styles.starTwo} />
-
           <View style={styles.header}>
             <View style={styles.headerTextBox}>
+              <Text style={styles.eyebrow}>CENTRO DE COMANDO</Text>
               <Text style={styles.title}>Dashboard da Colônia</Text>
               <Text style={styles.subtitle}>Visão geral da base AresLife</Text>
             </View>
 
             <View style={styles.headerIcon}>
-              <Ionicons name="planet-outline" size={24} color={colors.secondary} />
+              <Ionicons name="planet-outline" size={26} color={colors.secondary} />
             </View>
           </View>
 
           <View style={styles.heroCard}>
-            <View style={styles.heroOverlay}>
+            <View style={styles.heroTop}>
               <View>
                 <Text style={styles.heroTitle}>Base Ares-01</Text>
-                <Text style={styles.heroSubtitle}>Sol 128 · 14:32</Text>
+                <Text style={styles.heroSubtitle}>Sol 128 · Operação ativa</Text>
               </View>
 
-              <View style={styles.heroBadge}>
-                <Ionicons name="radio-outline" size={15} color={colors.success} />
-                <Text style={styles.heroBadgeText}>Online</Text>
+              <View style={styles.onlineBadge}>
+                <View style={styles.onlineDot} />
+                <Text style={styles.onlineText}>Online</Text>
               </View>
             </View>
 
-            <View style={styles.colonyIllustration}>
-              <View style={styles.dome} />
-              <View style={styles.tower} />
-              <View style={styles.moduleOne} />
-              <View style={styles.moduleTwo} />
+            <View style={styles.heroCenter}>
+              <View style={styles.planetBase}>
+                <Ionicons name="rocket-outline" size={44} color={colors.text} />
+              </View>
+
+              <View style={styles.heroInfo}>
+                <Text style={styles.heroNumber}>91%</Text>
+                <Text style={styles.heroLabel}>Eficiência geral</Text>
+              </View>
+            </View>
+
+            <View style={styles.heroBottom}>
+              <Text style={styles.heroBottomText}>Habitat seguro</Text>
+              <Text style={styles.heroBottomText}>Monitoramento em tempo real</Text>
             </View>
           </View>
 
-          <Text style={styles.sectionTitle}>Sistemas Ambientais</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Sistemas Ambientais</Text>
+            <Text style={styles.sectionHint}>Atualizado agora</Text>
+          </View>
 
           <View style={styles.grid}>
             {resources.map((resource) => (
@@ -136,15 +154,12 @@ export default function DashboardScreen() {
                 style={[
                   styles.resourceCard,
                   {
-                    backgroundColor: resource.background,
                     borderColor: resource.border,
                     shadowColor: resource.border,
                   },
                 ]}
               >
-                <View style={styles.resourceHeader}>
-                  <Text style={styles.resourceLabel}>{resource.label}</Text>
-
+                <View style={styles.resourceTop}>
                   <View
                     style={[
                       styles.resourceIconBox,
@@ -155,13 +170,18 @@ export default function DashboardScreen() {
                   >
                     <Ionicons
                       name={resource.icon}
-                      size={21}
+                      size={22}
                       color={resource.color}
                     />
                   </View>
+
+                  <Text style={[styles.resourceSignal, { color: resource.color }]}>
+                    OK
+                  </Text>
                 </View>
 
                 <Text style={styles.resourceValue}>{resource.value}</Text>
+                <Text style={styles.resourceLabel}>{resource.label}</Text>
                 <Text style={[styles.resourceStatus, { color: resource.color }]}>
                   {resource.status}
                 </Text>
@@ -169,7 +189,10 @@ export default function DashboardScreen() {
             ))}
           </View>
 
-          <Text style={styles.sectionTitle}>Visão Geral da Colônia</Text>
+          <View style={styles.sectionHeader}>
+            <Text style={styles.sectionTitle}>Visão Geral</Text>
+            <Text style={styles.sectionHint}>Base marciana</Text>
+          </View>
 
           <View style={styles.statsGrid}>
             {stats.map((stat) => (
@@ -177,14 +200,14 @@ export default function DashboardScreen() {
                 <View style={styles.statIconBox}>
                   <Ionicons
                     name={stat.icon}
-                    size={18}
-                    color={colors.textSecondary}
+                    size={19}
+                    color={colors.secondary}
                   />
                 </View>
 
                 <View>
-                  <Text style={styles.statLabel}>{stat.label}</Text>
                   <Text style={styles.statValue}>{stat.value}</Text>
+                  <Text style={styles.statLabel}>{stat.label}</Text>
                 </View>
               </View>
             ))}
@@ -192,12 +215,18 @@ export default function DashboardScreen() {
 
           <View style={styles.statusBox}>
             <View style={styles.statusHeader}>
-              <Ionicons
-                name="shield-checkmark-outline"
-                size={22}
-                color={colors.success}
-              />
-              <Text style={styles.statusTitle}>Status geral</Text>
+              <View style={styles.statusIconBox}>
+                <Ionicons
+                  name="shield-checkmark-outline"
+                  size={22}
+                  color={colors.success}
+                />
+              </View>
+
+              <View>
+                <Text style={styles.statusTitle}>Status geral</Text>
+                <Text style={styles.statusSubtitle}>Operação segura</Text>
+              </View>
             </View>
 
             <Text style={styles.statusText}>
@@ -207,29 +236,21 @@ export default function DashboardScreen() {
           </View>
 
           <View style={styles.actions}>
-            <Pressable
-              style={styles.primaryButton}
+            <AppButton
+              title="Gerenciar turistas"
+              subtitle="Acompanhe visitantes, missões e status de saúde."
+              icon="people-outline"
+              variant="purple"
               onPress={() => router.push("/turistas" as never)}
-            >
-              <Ionicons name="people-outline" size={18} color={colors.text} />
-              <Text style={styles.primaryButtonText}>
-                Gerenciar turistas espaciais
-              </Text>
-            </Pressable>
+            />
 
-            <Pressable
-              style={styles.secondaryButton}
+            <AppButton
+              title="Ver alertas do habitat"
+              subtitle="Confira eventos críticos e avisos da colônia."
+              icon="notifications-outline"
+              variant="orange"
               onPress={() => router.push("/alerts" as never)}
-            >
-              <Ionicons
-                name="notifications-outline"
-                size={18}
-                color={colors.secondary}
-              />
-              <Text style={styles.secondaryButtonText}>
-                Ver alertas do habitat
-              </Text>
-            </Pressable>
+            />
           </View>
         </ScrollView>
 
@@ -247,43 +268,18 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.background,
+    overflow: "hidden",
   },
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: "transparent",
   },
   content: {
     paddingHorizontal: 22,
-    paddingTop: 30,
+    paddingTop: 28,
     paddingBottom: 120,
   },
-  marsGlow: {
-    position: "absolute",
-    width: 240,
-    height: 240,
-    borderRadius: 120,
-    backgroundColor: "rgba(249, 115, 22, 0.14)",
-    right: -110,
-    top: 20,
-  },
-  starOne: {
-    position: "absolute",
-    width: 4,
-    height: 4,
-    borderRadius: 2,
-    backgroundColor: colors.secondary,
-    top: 92,
-    left: 34,
-  },
-  starTwo: {
-    position: "absolute",
-    width: 5,
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: colors.accent,
-    top: 180,
-    right: 42,
-  },
+
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -294,10 +290,18 @@ const styles = StyleSheet.create({
   headerTextBox: {
     flex: 1,
   },
+  eyebrow: {
+    color: colors.secondary,
+    fontSize: 11,
+    fontWeight: "900",
+    letterSpacing: 1.6,
+    marginBottom: 6,
+  },
   title: {
     color: colors.text,
-    fontSize: 27,
+    fontSize: 28,
     fontWeight: "900",
+    lineHeight: 34,
   },
   subtitle: {
     color: colors.textSecondary,
@@ -305,119 +309,131 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   headerIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
-    backgroundColor: "rgba(34, 211, 238, 0.10)",
-    borderWidth: 1,
+    width: 54,
+    height: 54,
+    borderRadius: 19,
+    backgroundColor: colors.card,
+    borderWidth: 1.3,
     borderColor: colors.borderBlue,
     alignItems: "center",
     justifyContent: "center",
-  },
-  heroCard: {
-    height: 178,
-    borderRadius: 24,
-    backgroundColor: "#1B1F4D",
-    borderWidth: 1,
-    borderColor: "rgba(138, 147, 194, 0.35)",
-    overflow: "hidden",
-    marginBottom: 22,
-    shadowColor: colors.primary,
+    shadowColor: colors.secondary,
     shadowOpacity: 0.22,
+    shadowRadius: 12,
+    elevation: 5,
+  },
+
+  heroCard: {
+    backgroundColor: colors.card,
+    borderRadius: 26,
+    borderWidth: 1.4,
+    borderColor: colors.borderPurple,
+    padding: 18,
+    marginBottom: 24,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.24,
     shadowRadius: 18,
     elevation: 8,
   },
-  heroOverlay: {
-    position: "absolute",
-    left: 16,
-    right: 16,
-    top: 14,
-    zIndex: 2,
+  heroTop: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "flex-start",
+    gap: 12,
+    marginBottom: 18,
   },
   heroTitle: {
     color: colors.text,
-    fontSize: 18,
+    fontSize: 19,
     fontWeight: "900",
   },
   heroSubtitle: {
     color: colors.textSecondary,
     fontSize: 12,
-    marginTop: 3,
+    marginTop: 4,
   },
-  heroBadge: {
+  onlineBadge: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 5,
-    backgroundColor: "rgba(2, 3, 10, 0.55)",
+    gap: 6,
+    backgroundColor: colors.cardSoft,
     borderWidth: 1,
-    borderColor: "rgba(52, 211, 153, 0.45)",
+    borderColor: colors.success,
     borderRadius: 999,
     paddingHorizontal: 10,
     paddingVertical: 6,
+    alignSelf: "flex-start",
   },
-  heroBadgeText: {
+  onlineDot: {
+    width: 7,
+    height: 7,
+    borderRadius: 4,
+    backgroundColor: colors.success,
+  },
+  onlineText: {
     color: colors.success,
     fontSize: 12,
-    fontWeight: "800",
+    fontWeight: "900",
   },
-  colonyIllustration: {
-    flex: 1,
-    backgroundColor: "rgba(249, 115, 22, 0.16)",
+  heroCenter: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 18,
+    marginBottom: 18,
   },
-  dome: {
-    position: "absolute",
-    width: 130,
-    height: 72,
-    borderTopLeftRadius: 90,
-    borderTopRightRadius: 90,
-    borderWidth: 2,
-    borderColor: "rgba(234, 240, 255, 0.55)",
-    backgroundColor: "rgba(34, 211, 238, 0.12)",
-    left: 92,
-    bottom: 34,
-  },
-  tower: {
-    position: "absolute",
-    width: 22,
-    height: 118,
-    borderRadius: 10,
-    backgroundColor: "rgba(234, 240, 255, 0.28)",
-    borderWidth: 1,
-    borderColor: "rgba(34, 211, 238, 0.6)",
-    left: 58,
-    bottom: 34,
-  },
-  moduleOne: {
-    position: "absolute",
+  planetBase: {
     width: 96,
-    height: 34,
-    borderRadius: 17,
-    backgroundColor: "rgba(234, 240, 255, 0.18)",
-    borderWidth: 1,
-    borderColor: "rgba(34, 211, 238, 0.45)",
-    left: 34,
-    bottom: 24,
+    height: 96,
+    borderRadius: 48,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 6,
+    borderColor: colors.cardSoft,
   },
-  moduleTwo: {
-    position: "absolute",
-    width: 110,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: "rgba(234, 240, 255, 0.16)",
-    borderWidth: 1,
-    borderColor: "rgba(168, 85, 247, 0.45)",
-    right: 28,
-    bottom: 22,
+  heroInfo: {
+    flex: 1,
+  },
+  heroNumber: {
+    color: colors.text,
+    fontSize: 38,
+    fontWeight: "900",
+    lineHeight: 42,
+  },
+  heroLabel: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    marginTop: 4,
+    fontWeight: "700",
+  },
+  heroBottom: {
+    borderTopWidth: 1,
+    borderTopColor: colors.border,
+    paddingTop: 14,
+    gap: 6,
+  },
+  heroBottomText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    fontWeight: "700",
+  },
+
+  sectionHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginBottom: 14,
   },
   sectionTitle: {
     color: colors.text,
     fontSize: 18,
     fontWeight: "900",
-    marginBottom: 14,
   },
+  sectionHint: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: "700",
+  },
+
   grid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -426,44 +442,52 @@ const styles = StyleSheet.create({
   },
   resourceCard: {
     width: "48%",
-    minHeight: 128,
-    borderRadius: 20,
-    borderWidth: 1,
+    minHeight: 142,
+    borderRadius: 22,
+    borderWidth: 1.3,
+    backgroundColor: colors.card,
     padding: 14,
     shadowOpacity: 0.18,
     shadowRadius: 12,
     elevation: 4,
   },
-  resourceHeader: {
+  resourceTop: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-  },
-  resourceLabel: {
-    color: colors.textSecondary,
-    fontSize: 13,
-    fontWeight: "700",
+    marginBottom: 14,
   },
   resourceIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 14,
-    borderWidth: 1,
+    width: 42,
+    height: 42,
+    borderRadius: 15,
+    borderWidth: 1.2,
+    backgroundColor: colors.cardSoft,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "rgba(2, 3, 10, 0.25)",
+  },
+  resourceSignal: {
+    fontSize: 11,
+    fontWeight: "900",
+    letterSpacing: 1,
   },
   resourceValue: {
     color: colors.text,
-    fontSize: 28,
+    fontSize: 31,
     fontWeight: "900",
-    marginTop: 12,
+    marginBottom: 2,
+  },
+  resourceLabel: {
+    color: colors.text,
+    fontSize: 14,
+    fontWeight: "800",
   },
   resourceStatus: {
     fontSize: 12,
     fontWeight: "800",
-    marginTop: 5,
+    marginTop: 6,
   },
+
   statsGrid: {
     flexDirection: "row",
     flexWrap: "wrap",
@@ -472,88 +496,79 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: "48%",
-    borderRadius: 18,
-    backgroundColor: "rgba(14, 19, 48, 0.82)",
-    borderWidth: 1,
-    borderColor: "rgba(138, 147, 194, 0.22)",
+    borderRadius: 20,
+    backgroundColor: colors.card,
+    borderWidth: 1.2,
+    borderColor: colors.border,
     padding: 14,
     flexDirection: "row",
     alignItems: "center",
     gap: 12,
   },
   statIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 14,
-    backgroundColor: "rgba(234, 240, 255, 0.06)",
+    width: 42,
+    height: 42,
+    borderRadius: 15,
+    backgroundColor: colors.cardSoft,
     alignItems: "center",
     justifyContent: "center",
+  },
+  statValue: {
+    color: colors.text,
+    fontSize: 20,
+    fontWeight: "900",
   },
   statLabel: {
     color: colors.textSecondary,
     fontSize: 12,
-  },
-  statValue: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: "900",
     marginTop: 2,
+    fontWeight: "700",
   },
+
   statusBox: {
-    backgroundColor: "rgba(34, 197, 94, 0.10)",
-    borderRadius: 22,
+    backgroundColor: colors.card,
+    borderRadius: 24,
     padding: 18,
-    borderWidth: 1,
-    borderColor: "rgba(52, 211, 153, 0.45)",
+    borderWidth: 1.4,
+    borderColor: colors.success,
     marginBottom: 18,
+    shadowColor: colors.success,
+    shadowOpacity: 0.15,
+    shadowRadius: 14,
+    elevation: 4,
   },
   statusHeader: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
-    marginBottom: 8,
+    gap: 12,
+    marginBottom: 10,
+  },
+  statusIconBox: {
+    width: 44,
+    height: 44,
+    borderRadius: 16,
+    backgroundColor: colors.cardSoft,
+    alignItems: "center",
+    justifyContent: "center",
   },
   statusTitle: {
     color: colors.text,
     fontSize: 18,
     fontWeight: "900",
   },
+  statusSubtitle: {
+    color: colors.success,
+    fontSize: 12,
+    fontWeight: "800",
+    marginTop: 2,
+  },
   statusText: {
     color: colors.textSecondary,
     lineHeight: 21,
     fontSize: 14,
   },
+
   actions: {
-    gap: 12,
-  },
-  primaryButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: 16,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    gap: 8,
-  },
-  primaryButtonText: {
-    color: colors.text,
-    fontWeight: "900",
-    fontSize: 14,
-  },
-  secondaryButton: {
-    borderWidth: 1,
-    borderColor: colors.secondary,
-    paddingVertical: 16,
-    borderRadius: 18,
-    alignItems: "center",
-    justifyContent: "center",
-    flexDirection: "row",
-    gap: 8,
-    backgroundColor: "rgba(34, 211, 238, 0.07)",
-  },
-  secondaryButtonText: {
-    color: colors.secondary,
-    fontWeight: "900",
-    fontSize: 14,
+    marginTop: 2,
   },
 });
