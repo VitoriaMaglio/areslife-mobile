@@ -12,19 +12,22 @@ type AppButtonProps = {
   onPress: () => void;
 };
 
-const variantStyles = {
+const variants = {
   blue: {
     background: "rgba(34, 211, 238, 0.12)",
+    content: "rgba(3, 22, 38, 0.72)",
     border: colors.secondary,
     icon: colors.secondary,
   },
   purple: {
     background: "rgba(108, 92, 255, 0.16)",
+    content: "rgba(23, 18, 62, 0.72)",
     border: colors.primary,
     icon: colors.primary,
   },
   orange: {
-    background: "rgba(249, 115, 22, 0.15)",
+    background: "rgba(249, 115, 22, 0.16)",
+    content: "rgba(58, 25, 10, 0.72)",
     border: colors.orange,
     icon: colors.orange,
   },
@@ -37,7 +40,7 @@ export default function AppButton({
   variant = "blue",
   onPress,
 }: AppButtonProps) {
-  const current = variantStyles[variant];
+  const current = variants[variant];
 
   return (
     <Pressable onPress={onPress} style={styles.wrapper}>
@@ -56,14 +59,14 @@ export default function AppButton({
             styles.iconBox,
             {
               borderColor: current.border,
-              backgroundColor: "rgba(255,255,255,0.04)",
+              backgroundColor: "rgba(255, 255, 255, 0.04)",
             },
           ]}
         >
-          <Ionicons name={icon} size={25} color={current.icon} />
+          <Ionicons name={icon} size={24} color={current.icon} />
         </View>
 
-        <View style={styles.textArea}>
+        <View style={[styles.textArea, { backgroundColor: current.content }]}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
@@ -79,22 +82,22 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   card: {
-    minHeight: 92,
+    minHeight: 86,
     borderRadius: 24,
     borderWidth: 1.4,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    marginBottom: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    marginBottom: 14,
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
-    shadowOpacity: 0.35,
-    shadowRadius: 12,
+    gap: 12,
+    shadowOpacity: 0.32,
+    shadowRadius: 13,
     elevation: 5,
   },
   iconBox: {
-    width: 56,
-    height: 56,
+    width: 54,
+    height: 54,
     borderRadius: 18,
     borderWidth: 1.2,
     alignItems: "center",
@@ -102,16 +105,19 @@ const styles = StyleSheet.create({
   },
   textArea: {
     flex: 1,
+    borderRadius: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
   },
   title: {
     color: colors.text,
-    fontSize: 16,
+    fontSize: 15.5,
     fontWeight: "900",
-    marginBottom: 5,
+    marginBottom: 4,
   },
   subtitle: {
     color: colors.textSecondary,
-    fontSize: 12.5,
-    lineHeight: 17,
+    fontSize: 11.5,
+    lineHeight: 16,
   },
 });
