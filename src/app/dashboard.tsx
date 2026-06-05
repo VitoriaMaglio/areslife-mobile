@@ -213,28 +213,6 @@ export default function DashboardScreen() {
             ))}
           </View>
 
-          <View style={styles.statusBox}>
-            <View style={styles.statusHeader}>
-              <View style={styles.statusIconBox}>
-                <Ionicons
-                  name="shield-checkmark-outline"
-                  size={22}
-                  color={colors.success}
-                />
-              </View>
-
-              <View>
-                <Text style={styles.statusTitle}>Status geral</Text>
-                <Text style={styles.statusSubtitle}>Operação segura</Text>
-              </View>
-            </View>
-
-            <Text style={styles.statusText}>
-              Habitat operando dentro dos limites de segurança. Monitoramento
-              ativo de turistas, astronautas e recursos essenciais.
-            </Text>
-          </View>
-
           <View style={styles.actions}>
             <AppButton
               title="Gerenciar turistas"
@@ -523,49 +501,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginTop: 2,
     fontWeight: "700",
-  },
-
-  statusBox: {
-    backgroundColor: colors.card,
-    borderRadius: 24,
-    padding: 18,
-    borderWidth: 1.4,
-    borderColor: colors.success,
-    marginBottom: 18,
-    shadowColor: colors.success,
-    shadowOpacity: 0.15,
-    shadowRadius: 14,
-    elevation: 4,
-  },
-  statusHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    marginBottom: 10,
-  },
-  statusIconBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 16,
-    backgroundColor: colors.cardSoft,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  statusTitle: {
-    color: colors.text,
-    fontSize: 18,
-    fontWeight: "900",
-  },
-  statusSubtitle: {
-    color: colors.success,
-    fontSize: 12,
-    fontWeight: "800",
-    marginTop: 2,
-  },
-  statusText: {
-    color: colors.textSecondary,
-    lineHeight: 21,
-    fontSize: 14,
   },
 
   actions: {

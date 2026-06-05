@@ -14,25 +14,22 @@ type AppButtonProps = {
 
 const variants = {
   blue: {
-    background: "rgba(0, 188, 212, 0.18)",
-    border: "#22D3EE",
-    glow: "rgba(34, 211, 238, 0.35)",
-    iconBackground: "rgba(34, 211, 238, 0.10)",
-    icon: "#22D3EE",
+    main: "#22D3EE",
+    dark: "#062B3A",
+    soft: "#0B1E35",
+    
   },
   purple: {
-    background: "rgba(108, 92, 255, 0.20)",
-    border: "#6C5CFF",
-    glow: "rgba(108, 92, 255, 0.38)",
-    iconBackground: "rgba(108, 92, 255, 0.12)",
-    icon: "#8B7CFF",
+    main: "#8B5CF6",
+    dark: "#241348",
+    soft: "#17123A",
+    
   },
   orange: {
-    background: "rgba(249, 115, 22, 0.20)",
-    border: "#F97316",
-    glow: "rgba(249, 115, 22, 0.38)",
-    iconBackground: "rgba(249, 115, 22, 0.12)",
-    icon: "#F97316",
+    main: "#F97316",
+    dark: "#3A1807",
+    soft: "#261006",
+   
   },
 };
 
@@ -51,31 +48,23 @@ export default function AppButton({
         style={[
           styles.card,
           {
-            backgroundColor: current.background,
-            borderColor: current.border,
-            shadowColor: current.border,
+            borderColor: current.main,
+            shadowColor: current.main,
           },
         ]}
       >
-        <View
-          style={[
-            styles.innerGlow,
-            {
-              backgroundColor: current.glow,
-            },
-          ]}
-        />
+        <View style={[styles.sideBar, { backgroundColor: current.main }]} />
 
         <View
           style={[
             styles.iconBox,
             {
-              borderColor: current.border,
-              backgroundColor: current.iconBackground,
+              backgroundColor: current.dark,
+              borderColor: current.main,
             },
           ]}
         >
-          <Ionicons name={icon} size={24} color={current.icon} />
+          <Ionicons name={icon} size={25} color={current.main} />
         </View>
 
         <View style={styles.textArea}>
@@ -83,13 +72,19 @@ export default function AppButton({
           <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
 
-        <View style={styles.arrowBox}>
-          <Ionicons
-            name="chevron-forward"
-            size={23}
-            color={colors.textSecondary}
-          />
+        <View style={[styles.arrowCircle, { backgroundColor: current.dark }]}>
+          <Ionicons name="arrow-forward" size={18} color={current.main} />
         </View>
+
+        <View
+          style={[
+            styles.cornerDetail,
+            {
+              borderTopColor: current.main,
+              borderRightColor: current.main,
+            },
+          ]}
+        />
       </View>
     </Pressable>
   );
@@ -100,39 +95,41 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   card: {
-    minHeight: 88,
+    position: "relative",
+    minHeight: 92,
     borderRadius: 24,
-    borderWidth: 1.6,
-    paddingHorizontal: 16,
-    paddingVertical: 13,
+    borderWidth: 1.4,
+    backgroundColor: "#0A1028",
     marginBottom: 15,
+    paddingVertical: 14,
+    paddingLeft: 18,
+    paddingRight: 14,
     flexDirection: "row",
     alignItems: "center",
-    gap: 14,
+    gap: 12,
     overflow: "hidden",
-    shadowOpacity: 0.42,
-    shadowRadius: 13,
+    shadowOpacity: 0.28,
+    shadowRadius: 14,
     elevation: 6,
   },
-  innerGlow: {
+  sideBar: {
     position: "absolute",
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    right: -50,
-    top: -38,
-    opacity: 0.18,
+    left: 0,
+    top: 0,
+    bottom: 0,
+    width: 6,
   },
   iconBox: {
-    width: 54,
-    height: 54,
-    borderRadius: 18,
+    width: 56,
+    height: 56,
+    borderRadius: 20,
     borderWidth: 1.3,
     alignItems: "center",
     justifyContent: "center",
   },
   textArea: {
     flex: 1,
+    paddingRight: 4,
   },
   title: {
     color: colors.text,
@@ -143,11 +140,23 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.textSecondary,
     fontSize: 12,
-    lineHeight: 16,
+    lineHeight: 17,
   },
-  arrowBox: {
-    width: 24,
+  arrowCircle: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     alignItems: "center",
     justifyContent: "center",
+  },
+  cornerDetail: {
+    position: "absolute",
+    right: 0,
+    top: 0,
+    width: 28,
+    height: 28,
+    borderTopWidth: 2,
+    borderRightWidth: 2,
+    borderTopRightRadius: 24,
   },
 });
