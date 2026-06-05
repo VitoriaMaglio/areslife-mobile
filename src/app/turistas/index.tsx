@@ -1,357 +1,385 @@
+import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import {
+  Pressable,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TextInput,
   View,
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { router } from "expo-router";
-import { colors, gradients } from "../../constants/colors";
 
-const tourists = [
+import BottomNav from "../../components/BottomNav";
+import TouristCard from "../../components/TouristCard";
+import { colors } from "../../constants/colors";
+import { Tourist } from "../../types/tourist";
+
+const tourists: Tourist[] = [
   {
     id: "1",
-    name: "Marina Magalhães",
+    name: "Laura Mendes",
+    age: 28,
+    nationality: "Brasil",
+    missionType: "Exploradora",
+    healthStatus: "Estável",
+    ticketStatus: "Confirmado",
+    origin: "Terra",
     destination: "Marte",
-    status: "Em treinamento",
-    oxygen: "96%",
-    mission: "Ares-01",
-    emoji: "👩‍🚀",
+    status: "Seguro",
+    oxygenLevel: 96,
+    heartRate: 78,
+    missionDays: 12,
   },
   {
     id: "2",
-    name: "João Pedro",
-    destination: "Lua",
-    status: "Aguardando embarque",
-    oxygen: "92%",
-    mission: "Lunar Gate",
-    emoji: "🚀",
+    name: "Rafael Oliveira",
+    age: 34,
+    nationality: "Brasil",
+    missionType: "Científica",
+    healthStatus: "Estável",
+    ticketStatus: "Confirmado",
+    origin: "Terra",
+    destination: "Base Ares-01",
+    status: "Seguro",
+    oxygenLevel: 94,
+    heartRate: 82,
+    missionDays: 18,
   },
   {
     id: "3",
-    name: "Bruno Vinicius",
+    name: "Camila Sanders",
+    age: 25,
+    nationality: "Canadá",
+    missionType: "Turismo espacial",
+    healthStatus: "Acompanhamento",
+    ticketStatus: "Pendente",
+    origin: "Terra",
     destination: "Marte",
-    status: "Aprovado",
-    oxygen: "98%",
-    mission: "Ares-02",
-    emoji: "🪐",
+    status: "Atenção",
+    oxygenLevel: 89,
+    heartRate: 91,
+    missionDays: 7,
+  },
+  {
+    id: "4",
+    name: "James Wilson",
+    age: 46,
+    nationality: "Estados Unidos",
+    missionType: "Exploradora",
+    healthStatus: "Estável",
+    ticketStatus: "Confirmado",
+    origin: "Terra",
+    destination: "Base Ares-02",
+    status: "Seguro",
+    oxygenLevel: 92,
+    heartRate: 76,
+    missionDays: 22,
   },
 ];
 
 export default function TouristsScreen() {
+  function handleCreateTourist() {
+    router.push("/turistas/create" as never);
+  }
+
+  function handleEditTourist(id?: string) {
+    if (!id) return;
+
+    router.push({
+      pathname: "/turistas/edit",
+      params: { id },
+    } as never);
+  }
+
   return (
-    <View style={styles.root}>
-      <LinearGradient colors={gradients.space} style={StyleSheet.absoluteFill} />
-
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <LinearGradient
-          colors={gradients.hero}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.hero}
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.screen}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
         >
-          <View style={styles.planetBadge}>
-            <Text style={styles.planet}>🪐</Text>
-          </View>
-          <Text style={styles.kicker}>PASSAGEIROS · MISSÕES</Text>
-          <Text style={styles.title}>Turistas Espaciais</Text>
-          <Text style={styles.subtitle}>
-            Gerencie passageiros, destinos, status de treinamento e dados vitais
-            das missões espaciais.
-          </Text>
-        </LinearGradient>
+          <View style={styles.marsGlow} />
+          <View style={styles.starOne} />
+          <View style={styles.starTwo} />
 
-        <View style={styles.infoBox}>
-          <Text style={styles.infoTitle}>Integração com API REST</Text>
-          <Text style={styles.infoText}>
-            Esta tela já está preparada para receber o CRUD completo. Por
-            enquanto, os dados são simulados para demonstrar o fluxo do
-            aplicativo.
-          </Text>
-        </View>
-
-        <View style={styles.statsRow}>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>03</Text>
-            <Text style={styles.statLabel}>Turistas</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>02</Text>
-            <Text style={styles.statLabel}>Missões</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statValue}>100%</Text>
-            <Text style={styles.statLabel}>Monitorado</Text>
-          </View>
-        </View>
-
-        <View style={styles.sectionHeader}>
-          <View style={styles.sectionBar} />
-          <Text style={styles.sectionTitle}>LISTA DE PASSAGEIROS</Text>
-        </View>
-
-        {tourists.map((tourist) => (
-          <View key={tourist.id} style={styles.card}>
-            <View style={styles.cardHeader}>
-              <LinearGradient colors={gradients.button} style={styles.avatar}>
-                <Text style={styles.avatarText}>{tourist.emoji}</Text>
-              </LinearGradient>
-
-              <View style={styles.cardInfo}>
-                <Text style={styles.cardTitle}>{tourist.name}</Text>
-                <Text style={styles.cardSubtitle}>
-                  Destino: {tourist.destination}
-                </Text>
-              </View>
-
-              <View style={styles.badge}>
-                <Text style={styles.badgeText}>{tourist.status}</Text>
-              </View>
+          <View style={styles.header}>
+            <View style={styles.headerTextBox}>
+              <Text style={styles.title}>Turistas Espaciais</Text>
+              <Text style={styles.subtitle}>Acompanhe seus visitantes</Text>
             </View>
 
-            <View style={styles.detailsRow}>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Missão</Text>
-                <Text style={styles.detailValue}>{tourist.mission}</Text>
-              </View>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Oxigênio</Text>
-                <Text style={[styles.detailValue, { color: colors.secondary }]}>
-                  {tourist.oxygen}
-                </Text>
-              </View>
-              <View style={styles.detailItem}>
-                <Text style={styles.detailLabel}>Risco</Text>
-                <Text style={[styles.detailValue, { color: colors.success }]}>
-                  Baixo
-                </Text>
-              </View>
+            <View style={styles.headerIcon}>
+              <Ionicons name="people-outline" size={25} color={colors.secondary} />
             </View>
           </View>
-        ))}
 
-        <TouchableOpacity
-          activeOpacity={0.85}
-          onPress={() => router.push("/turistas/create")}
-          style={styles.primaryWrap}
-        >
-          <LinearGradient
-            colors={gradients.button}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-            style={styles.primaryButton}
-          >
-            <Text style={styles.primaryButtonText}>Cadastrar novo turista</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+          <View style={styles.searchRow}>
+            <View style={styles.searchBox}>
+              <Ionicons name="search" size={18} color={colors.textSecondary} />
 
-        <TouchableOpacity
-          style={styles.secondaryButton}
-          activeOpacity={0.85}
-          onPress={() => router.push("/turistas/edit/1")}
-        >
-          <Text style={styles.secondaryButtonText}>Testar tela de edição</Text>
-        </TouchableOpacity>
+              <TextInput
+                placeholder="Buscar turista..."
+                placeholderTextColor={colors.textSecondary}
+                style={styles.searchInput}
+              />
+            </View>
 
-        <TouchableOpacity
-          style={styles.outlineButton}
-          activeOpacity={0.85}
-          onPress={() => router.push("/dashboard")}
-        >
-          <Text style={styles.outlineButtonText}>Voltar ao dashboard</Text>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
+            <View style={styles.filterBox}>
+              <Ionicons name="options-outline" size={20} color={colors.secondary} />
+            </View>
+          </View>
+
+          <Pressable style={styles.addCard} onPress={handleCreateTourist}>
+            <View style={styles.addIconBox}>
+              <Ionicons name="add" size={26} color={colors.text} />
+            </View>
+
+            <View style={styles.addTextBox}>
+              <Text style={styles.addTitle}>Cadastrar novo turista</Text>
+              <Text style={styles.addText}>
+                Registre visitantes, missões e status de saúde.
+              </Text>
+            </View>
+
+            <Ionicons
+              name="chevron-forward"
+              size={22}
+              color={colors.textSecondary}
+            />
+          </Pressable>
+
+          <View style={styles.summaryRow}>
+            <View style={styles.summaryCard}>
+              <Text style={styles.summaryValue}>4</Text>
+              <Text style={styles.summaryLabel}>Visitantes</Text>
+            </View>
+
+            <View style={styles.summaryCard}>
+              <Text style={styles.summaryValue}>3</Text>
+              <Text style={styles.summaryLabel}>Seguros</Text>
+            </View>
+
+            <View style={styles.summaryCard}>
+              <Text style={[styles.summaryValue, styles.warningText]}>1</Text>
+              <Text style={styles.summaryLabel}>Atenção</Text>
+            </View>
+          </View>
+
+          <View style={styles.listHeader}>
+            <Text style={styles.sectionTitle}>Lista de turistas</Text>
+            <Text style={styles.sectionHint}>CRUD via API</Text>
+          </View>
+
+          <View style={styles.list}>
+            {tourists.map((tourist) => (
+              <TouristCard
+                key={tourist.id}
+                tourist={tourist}
+                onEdit={() => handleEditTourist(tourist.id)}
+                onDelete={() => {}}
+              />
+            ))}
+          </View>
+        </ScrollView>
+
+        <BottomNav active="turistas" />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: colors.background },
-  container: { flex: 1 },
-  content: { padding: 20, paddingBottom: 48 },
-
-  hero: {
-    borderRadius: 26,
-    padding: 22,
-    borderWidth: 1,
-    borderColor: "rgba(108,92,255,0.45)",
-    marginBottom: 18,
-    shadowColor: colors.glow,
-    shadowOpacity: 0.5,
-    shadowRadius: 22,
-    shadowOffset: { width: 0, height: 10 },
-    elevation: 12,
+  safe: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
-  planetBadge: {
-    width: 60,
-    height: 60,
+  screen: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  content: {
+    paddingHorizontal: 22,
+    paddingTop: 30,
+    paddingBottom: 120,
+  },
+  marsGlow: {
+    position: "absolute",
+    width: 235,
+    height: 235,
+    borderRadius: 118,
+    backgroundColor: "rgba(249, 115, 22, 0.13)",
+    right: -105,
+    top: 24,
+  },
+  starOne: {
+    position: "absolute",
+    width: 4,
+    height: 4,
+    borderRadius: 2,
+    backgroundColor: colors.secondary,
+    top: 92,
+    left: 34,
+  },
+  starTwo: {
+    position: "absolute",
+    width: 5,
+    height: 5,
+    borderRadius: 3,
+    backgroundColor: colors.accent,
+    top: 176,
+    right: 42,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 14,
+    marginBottom: 20,
+  },
+  headerTextBox: {
+    flex: 1,
+  },
+  title: {
+    color: colors.text,
+    fontSize: 27,
+    fontWeight: "900",
+  },
+  subtitle: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    marginTop: 5,
+  },
+  headerIcon: {
+    width: 52,
+    height: 52,
     borderRadius: 18,
-    backgroundColor: "rgba(232,121,249,0.12)",
+    backgroundColor: "rgba(34, 211, 238, 0.10)",
     borderWidth: 1,
-    borderColor: "rgba(232,121,249,0.5)",
+    borderColor: colors.borderBlue,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 14,
   },
-  planet: { fontSize: 32 },
-  kicker: {
-    color: colors.accent,
-    fontSize: 12,
-    fontWeight: "800",
-    letterSpacing: 3,
-    marginBottom: 6,
-  },
-  title: { fontSize: 30, fontWeight: "900", color: "#FFFFFF", letterSpacing: 1 },
-  subtitle: {
-    color: colors.textLight,
-    fontSize: 15,
-    lineHeight: 22,
-    marginTop: 8,
-  },
-
-  infoBox: {
-    backgroundColor: colors.card,
-    borderRadius: 18,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderLeftWidth: 3,
-    borderLeftColor: colors.secondary,
-    marginBottom: 18,
-  },
-  infoTitle: {
-    color: colors.text,
-    fontSize: 16,
-    fontWeight: "800",
-    marginBottom: 6,
-  },
-  infoText: { color: colors.textLight, lineHeight: 21 },
-
-  statsRow: { flexDirection: "row", gap: 10, marginBottom: 24 },
-  statCard: {
-    flex: 1,
-    backgroundColor: colors.card,
-    borderRadius: 18,
-    paddingVertical: 16,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: colors.border,
+  searchRow: {
+    flexDirection: "row",
     alignItems: "center",
+    gap: 12,
+    marginBottom: 16,
   },
-  statValue: { color: colors.secondary, fontSize: 22, fontWeight: "900" },
-  statLabel: {
-    color: colors.textLight,
-    fontSize: 12,
-    marginTop: 4,
-    textAlign: "center",
-  },
-
-  sectionHeader: {
+  searchBox: {
+    flex: 1,
+    height: 52,
+    borderRadius: 18,
+    backgroundColor: "rgba(14, 19, 48, 0.82)",
+    borderWidth: 1,
+    borderColor: "rgba(138, 147, 194, 0.25)",
+    paddingHorizontal: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 10,
-    marginBottom: 16,
   },
-  sectionBar: {
-    width: 4,
-    height: 18,
-    borderRadius: 4,
-    backgroundColor: colors.accent,
+  searchInput: {
+    flex: 1,
+    color: colors.text,
+    fontSize: 14,
   },
-  sectionTitle: {
+  filterBox: {
+    width: 52,
+    height: 52,
+    borderRadius: 18,
+    backgroundColor: "rgba(14, 19, 48, 0.82)",
+    borderWidth: 1,
+    borderColor: "rgba(34, 211, 238, 0.35)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addCard: {
+    backgroundColor: "rgba(108, 92, 255, 0.13)",
+    borderWidth: 1,
+    borderColor: colors.borderPurple,
+    borderRadius: 22,
+    padding: 16,
+    marginBottom: 18,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.22,
+    shadowRadius: 14,
+    elevation: 5,
+  },
+  addIconBox: {
+    width: 46,
+    height: 46,
+    borderRadius: 16,
+    backgroundColor: colors.primary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addTextBox: {
+    flex: 1,
+  },
+  addTitle: {
     color: colors.text,
     fontSize: 16,
     fontWeight: "900",
-    letterSpacing: 2,
+    marginBottom: 4,
   },
-
-  card: {
-    backgroundColor: colors.card,
-    borderRadius: 22,
-    padding: 16,
+  addText: {
+    color: colors.textSecondary,
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  summaryRow: {
+    flexDirection: "row",
+    gap: 10,
+    marginBottom: 22,
+  },
+  summaryCard: {
+    flex: 1,
+    backgroundColor: "rgba(14, 19, 48, 0.82)",
     borderWidth: 1,
-    borderColor: colors.border,
+    borderColor: "rgba(138, 147, 194, 0.22)",
+    borderRadius: 18,
+    paddingVertical: 14,
+    alignItems: "center",
+  },
+  summaryValue: {
+    color: colors.secondary,
+    fontSize: 21,
+    fontWeight: "900",
+  },
+  summaryLabel: {
+    color: colors.textSecondary,
+    fontSize: 11,
+    marginTop: 3,
+    fontWeight: "700",
+  },
+  warningText: {
+    color: colors.orange,
+  },
+  listHeader: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     marginBottom: 14,
   },
-  cardHeader: { flexDirection: "row", alignItems: "center", marginBottom: 16 },
-  avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    marginRight: 12,
-  },
-  avatarText: { fontSize: 26 },
-  cardInfo: { flex: 1 },
-  cardTitle: { color: colors.text, fontSize: 17, fontWeight: "900" },
-  cardSubtitle: { color: colors.textLight, fontSize: 13, marginTop: 3 },
-  badge: {
-    backgroundColor: "rgba(52,211,153,0.15)",
-    borderWidth: 1,
-    borderColor: "rgba(52,211,153,0.4)",
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: 999,
-    maxWidth: 120,
-  },
-  badgeText: {
-    color: colors.success,
-    fontSize: 11,
+  sectionTitle: {
+    color: colors.text,
+    fontSize: 18,
     fontWeight: "900",
-    textAlign: "center",
   },
-  detailsRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    backgroundColor: colors.backgroundAlt,
-    borderWidth: 1,
-    borderColor: colors.border,
-    borderRadius: 16,
-    padding: 12,
+  sectionHint: {
+    color: colors.textSecondary,
+    fontSize: 12,
+    fontWeight: "700",
   },
-  detailItem: { flex: 1 },
-  detailLabel: { color: colors.textLight, fontSize: 12, marginBottom: 4 },
-  detailValue: { color: colors.text, fontSize: 13, fontWeight: "800" },
-
-  primaryWrap: {
-    borderRadius: 18,
-    marginTop: 12,
-    shadowColor: colors.secondary,
-    shadowOpacity: 0.6,
-    shadowRadius: 16,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 8,
+  list: {
+    gap: 2,
   },
-  primaryButton: { padding: 16, borderRadius: 18, alignItems: "center" },
-  primaryButtonText: {
-    color: "#06091A",
-    fontWeight: "900",
-    fontSize: 15,
-    letterSpacing: 0.5,
-  },
-  secondaryButton: {
-    backgroundColor: colors.surface,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 16,
-    borderRadius: 18,
-    marginTop: 12,
-    alignItems: "center",
-  },
-  secondaryButtonText: { color: colors.text, fontWeight: "800", fontSize: 15 },
-  outlineButton: {
-    borderWidth: 1.5,
-    borderColor: colors.secondary,
-    padding: 16,
-    borderRadius: 18,
-    marginTop: 12,
-    alignItems: "center",
-  },
-  outlineButtonText: { color: colors.secondary, fontWeight: "800", fontSize: 15 },
 });
