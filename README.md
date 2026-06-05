@@ -1,56 +1,257 @@
-# Welcome to your Expo app 👋
+# AresLife Mobile 
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicativo mobile desenvolvido em **React Native + Expo + TypeScript** para simular o gerenciamento de uma colônia em Marte, com foco em turismo espacial, monitoramento de recursos vitais, controle de visitantes e alertas inteligentes.
 
-## Get started
+## Integrantes
 
-1. Install dependencies
+| Nome                          | RM        |
+| ----------------------------- | --------- |
+| Felipe Maglio Filho           | RM 563512 |
+| João Pedro Bitencourt Goldoni | RM 564339 |
+| Marina Tamagnini Magalhães    | RM 561786 |
+| Mateus Granja dos Santos      | RM 564930 |
+| Vitória Valentina Maglio      | RM 563509 |
 
-   ```bash
-   npm install
-   ```
+## Repositório
 
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```txt
+https://github.com/marina-2907/areslife-mobile.git
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Sobre o projeto
 
-### Other setup steps
+O **AresLife Mobile** é um aplicativo criado para apoiar a proposta da solução AresLife, uma plataforma de simulação de colonização de Marte e turismo espacial.
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+A ideia do projeto é representar como um sistema mobile poderia auxiliar no controle de uma base marciana, permitindo o acompanhamento de recursos essenciais, turistas espaciais e alertas operacionais do habitat.
 
-## Learn more
+O aplicativo possui uma interface futurista, com tema inspirado no espaço sideral, fundo escuro, elementos visuais neon, cards informativos e navegação inferior entre as principais telas.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Objetivo da solução
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+O objetivo do AresLife é simular o gerenciamento de um habitat em Marte, conectando tecnologia, exploração espacial e controle de dados em ambientes extremos.
 
-## Join the community
+A aplicação permite visualizar informações importantes da colônia, como:
 
-Join our community of developers creating universal apps.
+* nível de oxigênio;
+* nível de água;
+* energia disponível;
+* temperatura do habitat;
+* turistas espaciais cadastrados;
+* status de saúde dos visitantes;
+* alertas inteligentes sobre riscos da missão.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## Tecnologias utilizadas
+
+* React Native
+* Expo
+* TypeScript
+* Expo Router
+* AsyncStorage
+* Ionicons
+* Git e GitHub
+
+## Funcionalidades implementadas
+
+* Tela inicial com identidade visual do AresLife;
+* Navegação inferior entre as telas principais;
+* Dashboard da colônia;
+* Exibição de recursos vitais do habitat;
+* Listagem de turistas espaciais;
+* Cadastro local de novos turistas;
+* Busca de turistas pelo nome;
+* Exclusão local de turistas;
+* Alertas inteligentes baseados nos dados dos turistas e da colônia;
+* Armazenamento local com AsyncStorage;
+* Estrutura preparada para integração futura com API REST.
+
+## Telas do aplicativo
+
+### Home
+
+Tela inicial do aplicativo, com acesso rápido para:
+
+* Dashboard da Colônia;
+* Turistas Espaciais;
+* Alertas Inteligentes.
+
+### Dashboard da Colônia
+
+Tela responsável por exibir os principais indicadores da base AresLife.
+
+Recursos exibidos:
+
+* oxigênio;
+* água;
+* energia;
+* temperatura;
+* população;
+* estruturas;
+* produção;
+* eficiência geral.
+
+### Turistas Espaciais
+
+Tela responsável pelo controle dos visitantes da colônia.
+
+Funcionalidades:
+
+* listar turistas;
+* pesquisar turistas pelo nome;
+* cadastrar novos turistas;
+* visualizar dados de missão;
+* visualizar status de saúde;
+* excluir turistas.
+
+### Cadastro de Turistas
+
+Tela de formulário para registrar novos turistas espaciais.
+
+Dados cadastrados:
+
+* nome;
+* idade;
+* nacionalidade;
+* origem;
+* destino;
+* tipo de missão;
+* status de saúde;
+* status do bilhete;
+* status geral;
+* nível de oxigênio;
+* batimentos cardíacos;
+* dias de missão.
+
+### Alertas Inteligentes
+
+Tela responsável por gerar alertas automáticos com base nos dados cadastrados.
+
+Exemplos de alertas:
+
+* oxigênio baixo;
+* temperatura crítica;
+* água em nível reduzido;
+* turista em status de atenção;
+* turista em status crítico;
+* batimentos cardíacos elevados;
+* bilhete pendente.
+
+## Modelo de dados
+
+A entidade principal do projeto é o **Turista Espacial**.
+
+```ts
+export type TouristStatus = "Seguro" | "Atenção" | "Crítico";
+
+export type Tourist = {
+  id: string;
+  name: string;
+  age: number;
+  nationality: string;
+  origin: string;
+  destination: string;
+  missionType: string;
+  healthStatus: string;
+  ticketStatus: string;
+  status: TouristStatus;
+  oxygenLevel: number;
+  heartRate: number;
+  missionDays: number;
+};
+```
+
+## Armazenamento local
+
+Atualmente, o aplicativo utiliza **AsyncStorage** para salvar os turistas localmente.
+
+Isso permite que o app funcione mesmo antes da integração com a API, simulando um CRUD básico no próprio dispositivo.
+
+Funcionalidades usando AsyncStorage:
+
+* carregar turistas cadastrados;
+* salvar novo turista;
+* pesquisar turista;
+* excluir turista;
+* utilizar dados dos turistas para gerar alertas inteligentes.
+
+## Estrutura de pastas
+
+```txt
+areslife-mobile
+├── assets
+│   └── images
+│       └── logo-1.png
+├── src
+│   ├── app
+│   │   ├── _layout.tsx
+│   │   ├── index.tsx
+│   │   ├── dashboard.tsx
+│   │   ├── alerts.tsx
+│   │   └── turistas
+│   │       ├── index.tsx
+│   │       ├── create.tsx
+│   │       └── edit.tsx
+│   ├── components
+│   │   ├── AppButton.tsx
+│   │   ├── BottomNav.tsx
+│   │   ├── SpaceBackground.tsx
+│   │   └── TouristCard.tsx
+│   ├── constants
+│   │   └── colors.ts
+│   ├── services
+│   │   └── api.ts
+│   └── types
+│       └── tourist.ts
+├── app.json
+├── package.json
+└── README.md
+```
+
+## Como executar o projeto
+
+### 1. Clonar o repositório
+
+```bash
+git clone https://github.com/marina-2907/areslife-mobile.git
+```
+
+### 2. Entrar na pasta do projeto
+
+```bash
+cd areslife-mobile
+```
+
+### 3. Instalar as dependências
+
+```bash
+npm install
+```
+
+### 4. Rodar o projeto
+
+```bash
+npx expo start
+```
+
+### 5. Abrir no Android
+
+No terminal do Expo, pressione:
+
+```bash
+a
+```
+
+Ou utilize o aplicativo **Expo Go** para escanear o QR Code.
+
+## Dependência importante
+
+Caso o AsyncStorage não esteja instalado, execute:
+
+```bash
+npx expo install @react-native-async-storage/async-storage
+```
+
+## Link do projeto
+
+```txt
+https://github.com/marina-2907/areslife-mobile.git
+```
