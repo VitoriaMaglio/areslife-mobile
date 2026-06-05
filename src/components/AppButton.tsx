@@ -14,22 +14,25 @@ type AppButtonProps = {
 
 const variants = {
   blue: {
-    background: "rgba(34, 211, 238, 0.12)",
-    content: "rgba(3, 22, 38, 0.72)",
-    border: colors.secondary,
-    icon: colors.secondary,
+    background: "rgba(0, 188, 212, 0.18)",
+    border: "#22D3EE",
+    glow: "rgba(34, 211, 238, 0.35)",
+    iconBackground: "rgba(34, 211, 238, 0.10)",
+    icon: "#22D3EE",
   },
   purple: {
-    background: "rgba(108, 92, 255, 0.16)",
-    content: "rgba(23, 18, 62, 0.72)",
-    border: colors.primary,
-    icon: colors.primary,
+    background: "rgba(108, 92, 255, 0.20)",
+    border: "#6C5CFF",
+    glow: "rgba(108, 92, 255, 0.38)",
+    iconBackground: "rgba(108, 92, 255, 0.12)",
+    icon: "#8B7CFF",
   },
   orange: {
-    background: "rgba(249, 115, 22, 0.16)",
-    content: "rgba(58, 25, 10, 0.72)",
-    border: colors.orange,
-    icon: colors.orange,
+    background: "rgba(249, 115, 22, 0.20)",
+    border: "#F97316",
+    glow: "rgba(249, 115, 22, 0.38)",
+    iconBackground: "rgba(249, 115, 22, 0.12)",
+    icon: "#F97316",
   },
 };
 
@@ -56,22 +59,37 @@ export default function AppButton({
       >
         <View
           style={[
+            styles.innerGlow,
+            {
+              backgroundColor: current.glow,
+            },
+          ]}
+        />
+
+        <View
+          style={[
             styles.iconBox,
             {
               borderColor: current.border,
-              backgroundColor: "rgba(255, 255, 255, 0.04)",
+              backgroundColor: current.iconBackground,
             },
           ]}
         >
           <Ionicons name={icon} size={24} color={current.icon} />
         </View>
 
-        <View style={[styles.textArea, { backgroundColor: current.content }]}>
+        <View style={styles.textArea}>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
 
-        <Ionicons name="chevron-forward" size={24} color={colors.textSecondary} />
+        <View style={styles.arrowBox}>
+          <Ionicons
+            name="chevron-forward"
+            size={23}
+            color={colors.textSecondary}
+          />
+        </View>
       </View>
     </Pressable>
   );
@@ -82,42 +100,54 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   card: {
-    minHeight: 86,
+    minHeight: 88,
     borderRadius: 24,
-    borderWidth: 1.4,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-    marginBottom: 14,
+    borderWidth: 1.6,
+    paddingHorizontal: 16,
+    paddingVertical: 13,
+    marginBottom: 15,
     flexDirection: "row",
     alignItems: "center",
-    gap: 12,
-    shadowOpacity: 0.32,
+    gap: 14,
+    overflow: "hidden",
+    shadowOpacity: 0.42,
     shadowRadius: 13,
-    elevation: 5,
+    elevation: 6,
+  },
+  innerGlow: {
+    position: "absolute",
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    right: -50,
+    top: -38,
+    opacity: 0.18,
   },
   iconBox: {
     width: 54,
     height: 54,
     borderRadius: 18,
-    borderWidth: 1.2,
+    borderWidth: 1.3,
     alignItems: "center",
     justifyContent: "center",
   },
   textArea: {
     flex: 1,
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
   },
   title: {
     color: colors.text,
-    fontSize: 15.5,
+    fontSize: 16,
     fontWeight: "900",
-    marginBottom: 4,
+    marginBottom: 5,
   },
   subtitle: {
     color: colors.textSecondary,
-    fontSize: 11.5,
+    fontSize: 12,
     lineHeight: 16,
+  },
+  arrowBox: {
+    width: 24,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
