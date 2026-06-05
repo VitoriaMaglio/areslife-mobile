@@ -7,92 +7,87 @@ import {
   Text,
   View,
 } from "react-native";
+
 import AppButton from "../components/AppButton";
+import BottomNav from "../components/BottomNav";
 import { colors } from "../constants/colors";
 
 export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.safe}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.content}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.starsOne} />
-        <View style={styles.starsTwo} />
-        <View style={styles.marsGlow} />
+      <View style={styles.screen}>
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.content}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.starOne} />
+          <View style={styles.starTwo} />
+          <View style={styles.starThree} />
+          <View style={styles.marsPlanet} />
 
-        <View style={styles.logoArea}>
-          <View style={styles.logoCircle}>
-            <View style={styles.logoInner}>
-              <Ionicons name="rocket" size={42} color={colors.text} />
+          <View style={styles.logoArea}>
+            <View style={styles.logoOrbit}>
+              <View style={styles.logoCircle}>
+                <Ionicons name="rocket" size={38} color={colors.text} />
+              </View>
             </View>
+
+            <Text style={styles.logoText}>
+              Ares<Text style={styles.logoHighlight}>Life</Text>
+            </Text>
+
+            <Text style={styles.tagline}>Explore. Construa. Inspire o futuro.</Text>
           </View>
 
-          <Text style={styles.logoText}>
-            Ares<Text style={styles.logoHighlight}>Life</Text>
-          </Text>
+          <View style={styles.welcomeBox}>
+            <Text style={styles.title}>Bem-vindo à AresLife</Text>
 
-          <Text style={styles.tagline}>Explore. Construa. Inspire o futuro.</Text>
-        </View>
-
-        <View style={styles.welcomeBox}>
-          <Text style={styles.title}>Bem-vindo à AresLife</Text>
-
-          <Text style={styles.subtitle}>
-            Gerencie sua colônia, acompanhe turistas espaciais e monitore os
-            alertas do habitat em Marte.
-          </Text>
-        </View>
-
-        <View style={styles.cardsArea}>
-          <AppButton
-            title="Dashboard da Colônia"
-            subtitle="Monitore oxigênio, água, energia e temperatura da base."
-            icon="planet-outline"
-            variant="blue"
-            onPress={() => router.push("/dashboard")}
-          />
-
-          <AppButton
-            title="Turistas Espaciais"
-            subtitle="Acompanhe visitantes, missões e status de saúde."
-            icon="people-outline"
-            variant="purple"
-            onPress={() => router.push("/turistas")}
-          />
-
-          <AppButton
-            title="Alertas do Habitat"
-            subtitle="Veja avisos, falhas e eventos críticos da colônia."
-            icon="warning-outline"
-            variant="orange"
-            onPress={() => router.push("/alerts")}
-          />
-        </View>
-
-        <View style={styles.footer}>
-          <View style={styles.footerItem}>
-            <Ionicons name="radio-outline" size={18} color={colors.secondary} />
-            <Text style={styles.footerText}>Controle em tempo real</Text>
+            <Text style={styles.subtitle}>
+              Gerencie sua colônia, cuide dos turistas e garanta a sobrevivência
+              em Marte.
+            </Text>
           </View>
 
-          <View style={styles.footerItem}>
-            <Ionicons
-              name="shield-checkmark-outline"
-              size={18}
-              color={colors.success}
+          <View style={styles.cardsArea}>
+            <AppButton
+              title="Dashboard da Colônia"
+              subtitle="Monitore sistemas e recursos da sua base em tempo real."
+              icon="planet-outline"
+              variant="blue"
+              onPress={() => router.push("/dashboard" as never)}
             />
-            <Text style={styles.footerText}>Segurança da base</Text>
+
+            <AppButton
+              title="Turistas Espaciais"
+              subtitle="Acompanhe a experiência e o bem-estar dos seus turistas."
+              icon="people-outline"
+              variant="purple"
+              onPress={() => router.push("/turistas" as never)}
+            />
+
+            <AppButton
+              title="Alertas do Habitat"
+              subtitle="Veja avisos, falhas e eventos críticos da colônia."
+              icon="notifications-outline"
+              variant="orange"
+              onPress={() => router.push("/alerts" as never)}
+            />
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+
+        <BottomNav active="inicio" />
+      </View>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   safe: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+  screen: {
     flex: 1,
     backgroundColor: colors.background,
   },
@@ -103,71 +98,82 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: 24,
-    paddingTop: 30,
-    paddingBottom: 32,
+    paddingTop: 26,
+    paddingBottom: 112,
   },
-  starsOne: {
+  starOne: {
     position: "absolute",
     width: 4,
     height: 4,
     borderRadius: 2,
     backgroundColor: colors.secondary,
-    top: 70,
-    left: 42,
+    top: 58,
+    left: 52,
     opacity: 0.9,
   },
-  starsTwo: {
+  starTwo: {
     position: "absolute",
     width: 5,
     height: 5,
     borderRadius: 3,
     backgroundColor: colors.accent,
-    top: 145,
-    right: 52,
-    opacity: 0.8,
+    top: 132,
+    right: 58,
+    opacity: 0.85,
   },
-  marsGlow: {
+  starThree: {
     position: "absolute",
-    width: 190,
-    height: 190,
-    borderRadius: 95,
-    backgroundColor: "rgba(249, 115, 22, 0.14)",
-    right: -80,
-    top: 40,
+    width: 3,
+    height: 3,
+    borderRadius: 2,
+    backgroundColor: colors.text,
+    top: 210,
+    left: 28,
+    opacity: 0.55,
+  },
+  marsPlanet: {
+    position: "absolute",
+    width: 210,
+    height: 210,
+    borderRadius: 105,
+    backgroundColor: "rgba(249, 115, 22, 0.18)",
+    right: -105,
+    top: 28,
   },
   logoArea: {
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 36,
+    marginTop: 8,
+    marginBottom: 28,
   },
-  logoCircle: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
+  logoOrbit: {
+    width: 122,
+    height: 122,
+    borderRadius: 61,
+    borderWidth: 6,
+    borderColor: colors.primary,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 18,
-    backgroundColor: colors.primary,
-    shadowColor: colors.glow,
-    shadowOpacity: 0.5,
+    shadowColor: colors.primary,
+    shadowOpacity: 0.55,
     shadowRadius: 22,
     elevation: 10,
+    marginBottom: 14,
   },
-  logoInner: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    backgroundColor: colors.background,
+  logoCircle: {
+    width: 98,
+    height: 98,
+    borderRadius: 49,
+    backgroundColor: "#02030A",
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.16)",
+    borderColor: "rgba(255, 255, 255, 0.12)",
   },
   logoText: {
     color: colors.text,
     fontSize: 42,
     fontWeight: "900",
-    letterSpacing: 0.5,
+    letterSpacing: -1,
   },
   logoHighlight: {
     color: colors.secondary,
@@ -176,14 +182,15 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     fontSize: 13,
     marginTop: 6,
-    letterSpacing: 1.2,
+    letterSpacing: 1.1,
   },
   welcomeBox: {
+    alignItems: "center",
     marginBottom: 28,
   },
   title: {
     color: colors.text,
-    fontSize: 28,
+    fontSize: 27,
     fontWeight: "900",
     textAlign: "center",
     marginBottom: 10,
@@ -191,27 +198,11 @@ const styles = StyleSheet.create({
   subtitle: {
     color: colors.textSecondary,
     fontSize: 15,
-    lineHeight: 22,
+    lineHeight: 23,
     textAlign: "center",
+    maxWidth: 340,
   },
   cardsArea: {
     width: "100%",
-  },
-  footer: {
-    marginTop: 18,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-    paddingTop: 18,
-    gap: 12,
-  },
-  footerItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-  },
-  footerText: {
-    color: colors.textSecondary,
-    fontSize: 13,
   },
 });

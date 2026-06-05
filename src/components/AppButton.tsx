@@ -6,28 +6,28 @@ type IconName = keyof typeof Ionicons.glyphMap;
 
 type AppButtonProps = {
   title: string;
-  subtitle?: string;
+  subtitle: string;
   icon: IconName;
   variant?: "blue" | "purple" | "orange";
   onPress: () => void;
 };
 
-const backgroundByVariant = {
-  blue: "rgba(34, 211, 238, 0.10)",
-  purple: "rgba(108, 92, 255, 0.14)",
-  orange: "rgba(249, 115, 22, 0.12)",
-};
-
-const borderByVariant = {
-  blue: colors.borderBlue,
-  purple: colors.borderPurple,
-  orange: colors.borderOrange,
-};
-
-const iconByVariant = {
-  blue: colors.blue,
-  purple: colors.purple,
-  orange: colors.orange,
+const variantStyles = {
+  blue: {
+    background: "rgba(34, 211, 238, 0.12)",
+    border: colors.secondary,
+    icon: colors.secondary,
+  },
+  purple: {
+    background: "rgba(108, 92, 255, 0.16)",
+    border: colors.primary,
+    icon: colors.primary,
+  },
+  orange: {
+    background: "rgba(249, 115, 22, 0.15)",
+    border: colors.orange,
+    icon: colors.orange,
+  },
 };
 
 export default function AppButton({
@@ -37,15 +37,17 @@ export default function AppButton({
   variant = "blue",
   onPress,
 }: AppButtonProps) {
+  const current = variantStyles[variant];
+
   return (
-    <Pressable onPress={onPress} style={styles.pressable}>
+    <Pressable onPress={onPress} style={styles.wrapper}>
       <View
         style={[
-          styles.container,
+          styles.card,
           {
-            backgroundColor: backgroundByVariant[variant],
-            borderColor: borderByVariant[variant],
-            shadowColor: borderByVariant[variant],
+            backgroundColor: current.background,
+            borderColor: current.border,
+            shadowColor: current.border,
           },
         ]}
       >
@@ -53,62 +55,63 @@ export default function AppButton({
           style={[
             styles.iconBox,
             {
-              borderColor: borderByVariant[variant],
-              backgroundColor: `${iconByVariant[variant]}22`,
+              borderColor: current.border,
+              backgroundColor: "rgba(255,255,255,0.04)",
             },
           ]}
         >
-          <Ionicons name={icon} size={24} color={iconByVariant[variant]} />
+          <Ionicons name={icon} size={25} color={current.icon} />
         </View>
 
-        <View style={styles.textBox}>
+        <View style={styles.textArea}>
           <Text style={styles.title}>{title}</Text>
-          {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+          <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
 
-        <Ionicons name="chevron-forward" size={22} color={colors.textSecondary} />
+        <Ionicons name="chevron-forward" size={24} color={colors.textSecondary} />
       </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
-  pressable: {
+  wrapper: {
     width: "100%",
   },
-  container: {
+  card: {
     minHeight: 92,
-    borderRadius: 22,
-    borderWidth: 1,
-    padding: 16,
+    borderRadius: 24,
+    borderWidth: 1.4,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
     marginBottom: 16,
     flexDirection: "row",
     alignItems: "center",
     gap: 14,
     shadowOpacity: 0.35,
-    shadowRadius: 16,
-    elevation: 6,
+    shadowRadius: 12,
+    elevation: 5,
   },
   iconBox: {
-    width: 54,
-    height: 54,
+    width: 56,
+    height: 56,
     borderRadius: 18,
-    borderWidth: 1,
+    borderWidth: 1.2,
     alignItems: "center",
     justifyContent: "center",
   },
-  textBox: {
+  textArea: {
     flex: 1,
   },
   title: {
     color: colors.text,
     fontSize: 16,
-    fontWeight: "800",
-    marginBottom: 4,
+    fontWeight: "900",
+    marginBottom: 5,
   },
   subtitle: {
     color: colors.textSecondary,
-    fontSize: 12,
+    fontSize: 12.5,
     lineHeight: 17,
   },
 });
